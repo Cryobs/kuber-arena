@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>K8s Homelab App</title>
+    <style>
+        body { font-family: Arial; text-align: center; margin-top: 50px; }
+        button { padding: 10px 20px; font-size: 16px; }
+    </style>
+</head>
+<body>
+    <h1>🚀 Kubernetes Mini App</h1>
+    <p>Backend status: <span id="status">Checking...</span></p>
+    <button onclick="addName()">Добавить имя</button>
+    <button onclick="loadData()">Обновить данные</button>
+
+    <div id="data"></div>
+
+    <script>
+        const API_URL = 'http://localhost:3000';
+
+        async function loadData() {
+            const res = await fetch(`${API_URL}/`);
+            const data = await res.json();
+            document.getElementById('status').textContent = '✅ Online';
+            document.getElementById('data').innerHTML = '<pre>' + JSON.stringify(data, null, 2) + '</pre>';
+        }
+
+        async function addName() {
+            const name = prompt("Введите имя:");
+            if (name) {
+                await fetch(`${API_URL}/add`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name })
+                });
+                loadData();
+            }
+        }
+
+        loadData();
+    </script>
+</body>
+</html>
