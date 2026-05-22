@@ -20,6 +20,23 @@ const pool = new Pool({
   port: 5432,
 });
 
+async function initDatabase() {
+  try {
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS test (
+        id SERIAL PRIMARY KEY,
+        name VARCHAR(100) NOT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      );
+    `);
+    console.log('✅ Database initialized - table "test" is ready');
+  } catch (err) {
+    console.error('❌ Database initialization failed:', err);
+  }
+}
+
+initDatabase();
+
 app.get('/', async (req, res) => {
   try {
     const result = await pool.query('SELECT * FROM test ORDER BY id DESC');
