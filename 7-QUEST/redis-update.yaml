@@ -1,0 +1,11 @@
+auth:
+  password: "NewStrongPassword123!"
+
+master:
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      cpu: 300m
+      memory: 512Mi
