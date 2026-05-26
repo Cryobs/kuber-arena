@@ -1,0 +1,45 @@
+grafana:
+  enabled: true
+  persistance:
+    enabled: true
+    size: 5Gi
+  adminUser: admin
+  adminPassword: ""
+
+  dashboards:
+    default:
+      kubernetes-nodes:
+        gnetId: 1860
+        revision: 1 
+        datasource: Prometheus
+      kubernetes-cluster:
+        gnetId: 315
+        revision: 3 
+        datasource: Prometheus
+      pods:
+        gnetId: 7645 
+        revision: 1 
+        datasource: Prometheus
+
+prometheus:
+  prometheusSpec:
+    retention: 7d
+    resources:
+      requests:
+        cpu: 200m
+        memory: 512Mi
+      limits:
+        cpu: 800m
+        memory: 2Gi
+
+alertmanager:
+  enabled: true
+
+kubeStateMetrics:
+  enabled: true
+
+nodeExporter:
+  enabled: true
+
+prometheusOperator:
+  enabled: true
